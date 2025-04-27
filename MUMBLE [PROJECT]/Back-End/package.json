@@ -2,20 +2,24 @@
   "name": "back-end",
   "version": "1.0.0",
   "main": "server.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@clerk/clerk-js": "^5.62.2",
+    "@clerk/express": "^1.4.9",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "http-status-codes": "^2.3.0",
-    "mongoose": "^8.13.2"
+    "mongoose": "^8.13.2",
+    "nodemon": "^3.1.10"
   }
 }
