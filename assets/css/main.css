@@ -301,6 +301,9 @@ body {
   .main {
       grid-template-columns: 1fr;
   }
+  .main2 {
+      grid-template-columns: 1fr;
+  }
   .mockup {
     height: auto;
     width: 100%;
