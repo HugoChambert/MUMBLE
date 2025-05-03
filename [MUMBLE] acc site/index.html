@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>[MUMBLE]</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: sans-serif;
+    }
+    .playlist-card:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 max-w-sm mx-auto">
+  <h1 class="text-3xl font-bold mb-6 text-center">[MUMBLE]</h1>
+
+  <select id="languageSelect" class="w-full p-3 bg-zinc-800 text-black rounded-xl mb-6 text-lg focus:outline-none">
+    <option>English</option>
+    <option>Spanish</option>
+    <option>French</option>
+    <option>German</option>
+    <option>Italian</option>
+    <option>Dutch</option>
+    <option>Portuguese</option>
+    <option>Japanese</option>
+  </select>
+
+  <div id="playlistGrid" class="grid grid-cols-2 gap-4"></div>
+
+  <script>
+    const playlists = [
+      { title: "Today's Top Hits", image: "https://i.scdn.co/image/ab67706f000000024f9a4a6c6f9f6fe92943c15a", language: "English" },
+      { title: "All Out 1980s", image: "https://i.scdn.co/image/ab67706f00000002a3b56bcd06ea3dc6a426e154", language: "English" },
+      { title: "Rap Classics", image: "https://i.scdn.co/image/ab67706f0000000280c08a6f00db41f9a82c1e9a", language: "English" },
+      { title: "Rock Classics", image: "https://i.scdn.co/image/ab67706f00000002cb7f89c357cbb13e53992c32", language: "English" },
+      { title: "Latin Vibes", image: "https://i.scdn.co/image/ab67706f00000002c3c8ef693a5207b1c0e5b5b9", language: "Spanish" },
+      { title: "French Café", image: "https://i.scdn.co/image/ab67706f00000002724e57de06f4cc655d1c4569", language: "French" },
+      { title: "Deutsch Pop", image: "https://i.scdn.co/image/ab67706f00000002a0eb7059f6b92fdfd37aa6c3", language: "German" },
+      { title: "Italian Favorites", image: "https://i.scdn.co/image/ab67706f00000002d07a0e1c3b3e4bb8a7f9f183", language: "Italian" }
+    ];
+
+    const playlistGrid = document.getElementById("playlistGrid");
+    const languageSelect = document.getElementById("languageSelect");
+
+    function renderPlaylists(language) {
+      playlistGrid.innerHTML = "";
+
+      const filtered = playlists.filter(p => p.language === language);
+      if (filtered.length === 0) {
+        playlistGrid.innerHTML = `<p class="col-span-2 text-center text-zinc-400">No playlists available for this language.</p>`;
+        return;
+      }
+
+      filtered.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "playlist-card relative rounded-2xl overflow-hidden bg-zinc-900 shadow-md transition-transform duration-300";
+
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.title}" class="w-full h-32 object-cover" />
+          <div class="p-2 text-center text-sm font-medium truncate">${p.title}</div>
+          <button class="absolute bottom-3 right-3 bg-green-500 p-2 rounded-full hover:bg-green-400" aria-label="Play ${p.title}">
+            <i data-lucide="play" class="w-4 h-4 text-black"></i>
+          </button>
+        `;
+
+        playlistGrid.appendChild(card);
+      });
+
+      lucide.createIcons(); // re-render icons
+    }
+
+    languageSelect.addEventListener("change", (e) => {
+      renderPlaylists(e.target.value);
+    });
+
+    // Initial load
+    renderPlaylists(languageSelect.value);
+  </script>
+</body>
+</html>
