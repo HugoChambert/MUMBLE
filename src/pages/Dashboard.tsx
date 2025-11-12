@@ -6,6 +6,18 @@ import type { Playlist } from '../lib/supabase';
 import { searchSpotifyTracks, createPlaylist, addTracksToPlaylist } from '../lib/spotify';
 import styles from './Dashboard.module.css';
 
+const COUNTRIES = [
+  'United States', 'United Kingdom', 'Canada', 'Australia', 'Germany', 'France',
+  'Spain', 'Italy', 'Brazil', 'Mexico', 'Argentina', 'Japan', 'South Korea',
+  'China', 'India', 'Nigeria', 'South Africa', 'Sweden', 'Norway', 'Denmark',
+];
+
+const GENRES = [
+  'Pop', 'Rock', 'Hip Hop', 'Jazz', 'Classical', 'Electronic', 'R&B',
+  'Country', 'Blues', 'Reggae', 'Metal', 'Folk', 'Indie', 'Soul', 'Funk',
+  'Disco', 'House', 'Techno', 'Punk', 'Alternative',
+];
+
 export const Dashboard = () => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
@@ -14,6 +26,7 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     if (!user) {
@@ -127,6 +140,22 @@ export const Dashboard = () => {
       </header>
 
       <main className={styles.main}>
+        <div className={styles.searchSection}>
+          <div className={styles.searchBar}>
+            <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input
+              type="text"
+              placeholder="Search for country or genre..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
+        </div>
+
         <div className={styles.createSection}>
           <h2 className={styles.sectionTitle}>Create a Playlist</h2>
           <p className={styles.sectionDescription}>
@@ -136,28 +165,38 @@ export const Dashboard = () => {
           <div className={styles.inputGroup}>
             <div className={styles.inputWrapper}>
               <label htmlFor="country" className={styles.label}>Country</label>
-              <input
+              <select
                 id="country"
-                type="text"
-                placeholder="e.g., Brazil, Japan, Sweden"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
-                className={styles.input}
+                className={styles.select}
                 disabled={loading}
-              />
+              >
+                <option value="">Select a country</option>
+                {COUNTRIES.filter(c =>
+                  !searchQuery || c.toLowerCase().includes(searchQuery.toLowerCase())
+                ).map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
             </div>
 
             <div className={styles.inputWrapper}>
-              <label htmlFor="genre" className={styles.label}>Genre / Podcast</label>
-              <input
+              <label htmlFor="genre" className={styles.label}>Genre</label>
+              <select
                 id="genre"
-                type="text"
-                placeholder="e.g., Jazz, Rock, Pop, Comedy"
                 value={genre}
                 onChange={(e) => setGenre(e.target.value)}
-                className={styles.input}
+                className={styles.select}
                 disabled={loading}
-              />
+              >
+                <option value="">Select a genre</option>
+                {GENRES.filter(g =>
+                  !searchQuery || g.toLowerCase().includes(searchQuery.toLowerCase())
+                ).map(g => (
+                  <option key={g} value={g}>{g}</option>
+                ))}
+              </select>
             </div>
           </div>
 

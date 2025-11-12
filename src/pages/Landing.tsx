@@ -65,7 +65,13 @@ export const Landing = () => {
   }, []);
 
   useEffect(() => {
+    let lastTime = Date.now();
+
     const animate = () => {
+      const currentTime = Date.now();
+      const deltaTime = (currentTime - lastTime) / 16.67;
+      lastTime = currentTime;
+
       setNoodles((prevNoodles) =>
         prevNoodles.map((noodle) => {
           let { x, y, vx, vy, rotation } = noodle;
@@ -82,14 +88,14 @@ export const Landing = () => {
             vy -= Math.sin(angle) * force * 0.8;
           }
 
-          const baseVx = (Math.sin(Date.now() * 0.0005 + noodle.id) * 0.15);
-          const baseVy = (Math.cos(Date.now() * 0.0003 + noodle.id) * 0.15);
+          const baseVx = (Math.sin(currentTime * 0.0005 + noodle.id) * 0.15);
+          const baseVy = (Math.cos(currentTime * 0.0003 + noodle.id) * 0.15);
 
           vx = vx * 0.92 + baseVx;
           vy = vy * 0.92 + baseVy;
 
-          x += vx;
-          y += vy;
+          x += vx * deltaTime;
+          y += vy * deltaTime;
 
           const scrollY = window.scrollY || window.pageYOffset;
           const pageHeight = Math.max(
@@ -102,7 +108,7 @@ export const Landing = () => {
           if (y < -noodle.height - scrollY) y = pageHeight + noodle.height;
           if (y > pageHeight + noodle.height) y = -noodle.height - scrollY;
 
-          rotation += vx * 0.15;
+          rotation += vx * 0.15 * deltaTime;
 
           return { ...noodle, x, y, vx, vy, rotation };
         })
