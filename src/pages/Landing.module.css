@@ -4,6 +4,23 @@
   overflow-x: hidden;
 }
 
+.cursorGlow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(29, 185, 84, 0.15) 0%,
+    rgba(29, 185, 84, 0.08) 30%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: screen;
+}
+
 .floatingOrbs {
   position: fixed;
   width: 100%;
@@ -106,6 +123,8 @@
   cursor: default;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+  --glow-x: 50%;
+  --glow-y: 50%;
 }
 
 .logoGradient {
@@ -123,9 +142,29 @@
   background-clip: text;
   animation: gradientShift 3s ease infinite;
   text-shadow: none;
-  filter: drop-shadow(0 0 30px rgba(29, 185, 84, 0.6))
-          drop-shadow(0 0 60px rgba(29, 185, 84, 0.4));
   transform: scale(1.05);
+  position: relative;
+}
+
+.logoGradient::before {
+  content: 'MUMBLE';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle 150px at var(--glow-x) var(--glow-y),
+    rgba(29, 185, 84, 0.8) 0%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(29, 185, 84, 0.8))
+          drop-shadow(0 0 60px rgba(29, 185, 84, 0.6));
+  pointer-events: none;
+  z-index: 1;
 }
 
 @keyframes gradientShift {

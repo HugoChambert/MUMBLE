@@ -5,7 +5,11 @@ import styles from './Landing.module.css';
 export const Landing = () => {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [isHowItWorksVisible, setIsHowItWorksVisible] = useState(false);
+  const [logoGlowPosition, setLogoGlowPosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const howItWorksRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLHeadingElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,6 +30,22 @@ export const Landing = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+
+      if (logoRef.current && isLogoHovered) {
+        const rect = logoRef.current.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        setLogoGlowPosition({ x, y });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [isLogoHovered]);
+
   const handleSignIn = () => {
     window.location.href = getSpotifyAuthUrl();
   };
@@ -35,7 +55,15 @@ export const Landing = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
+      <div
+        className={styles.cursorGlow}
+        style={{
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
+        }}
+      />
+
       <div className={styles.floatingOrbs}>
         <div className={styles.orb1}></div>
         <div className={styles.orb2}></div>
@@ -46,9 +74,18 @@ export const Landing = () => {
         <div className={styles.content}>
           <div className={styles.logoContainer}>
             <h1
+              ref={logoRef}
               className={`${styles.logo} ${isLogoHovered ? styles.logoGradient : ''}`}
               onMouseEnter={() => setIsLogoHovered(true)}
               onMouseLeave={() => setIsLogoHovered(false)}
+              style={
+                isLogoHovered
+                  ? {
+                      '--glow-x': `${logoGlowPosition.x}%`,
+                      '--glow-y': `${logoGlowPosition.y}%`,
+                    } as React.CSSProperties
+                  : undefined
+              }
             >
               MUMBLE
             </h1>
