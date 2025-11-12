@@ -3,12 +3,9 @@ import { getSpotifyAuthUrl } from '../lib/spotify';
 import styles from './Landing.module.css';
 
 export const Landing = () => {
-  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [isHowItWorksVisible, setIsHowItWorksVisible] = useState(false);
-  const [logoGlowPosition, setLogoGlowPosition] = useState({ x: 0, y: 0 });
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const howItWorksRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,19 +29,14 @@ export const Landing = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-
-      if (logoRef.current && isLogoHovered) {
-        const rect = logoRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        setLogoGlowPosition({ x, y });
-      }
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = -(e.clientY / window.innerHeight) * 2 + 1;
+      setMousePosition({ x, y });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [isLogoHovered]);
+  }, []);
 
   const handleSignIn = () => {
     window.location.href = getSpotifyAuthUrl();
@@ -56,37 +48,37 @@ export const Landing = () => {
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <div
-        className={styles.cursorGlow}
-        style={{
-          left: `${cursorPosition.x}px`,
-          top: `${cursorPosition.y}px`,
-        }}
-      />
-
-      <div className={styles.floatingOrbs}>
-        <div className={styles.orb1}></div>
-        <div className={styles.orb2}></div>
-        <div className={styles.orb3}></div>
+      <div className={styles.noodleBackground}>
+        <div
+          className={styles.noodle1}
+          style={{
+            transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px) rotateX(${mousePosition.y * 15}deg) rotateY(${mousePosition.x * 15}deg)`,
+          }}
+        />
+        <div
+          className={styles.noodle2}
+          style={{
+            transform: `translate(${mousePosition.x * -25}px, ${mousePosition.y * -25}px) rotateX(${mousePosition.y * -12}deg) rotateY(${mousePosition.x * -12}deg)`,
+          }}
+        />
+        <div
+          className={styles.noodle3}
+          style={{
+            transform: `translate(${mousePosition.x * 20}px, ${mousePosition.y * -20}px) rotateX(${mousePosition.y * 10}deg) rotateY(${mousePosition.x * 10}deg)`,
+          }}
+        />
+        <div
+          className={styles.noodle4}
+          style={{
+            transform: `translate(${mousePosition.x * -15}px, ${mousePosition.y * 25}px) rotateX(${mousePosition.y * -8}deg) rotateY(${mousePosition.x * 8}deg)`,
+          }}
+        />
       </div>
 
       <div className={styles.heroSection}>
         <div className={styles.content}>
           <div className={styles.logoContainer}>
-            <h1
-              ref={logoRef}
-              className={`${styles.logo} ${isLogoHovered ? styles.logoGradient : ''}`}
-              onMouseEnter={() => setIsLogoHovered(true)}
-              onMouseLeave={() => setIsLogoHovered(false)}
-              style={
-                isLogoHovered
-                  ? {
-                      '--glow-x': `${logoGlowPosition.x}%`,
-                      '--glow-y': `${logoGlowPosition.y}%`,
-                    } as React.CSSProperties
-                  : undefined
-              }
-            >
+            <h1 className={styles.logo}>
               MUMBLE
             </h1>
             <div className={styles.tagline}>Discover music from around the world</div>
