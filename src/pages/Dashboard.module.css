@@ -404,7 +404,7 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .header {
@@ -413,31 +413,22 @@
     align-items: flex-start;
   }
 
+  .userInfo {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .logo {
     font-size: 1.5rem;
   }
 
-  .createSection {
-    padding: 2rem 1.5rem;
+  .userName {
+    font-size: 0.875rem;
   }
 
-  .sectionTitle {
-    font-size: 1.75rem;
-  }
-
-  .inputGroup {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-
-  .playlistGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 1rem;
+  .signOutButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
   }
 
   .createSection {
@@ -448,7 +439,87 @@
     font-size: 1.5rem;
   }
 
+  .sectionDescription {
+    font-size: 0.9375rem;
+  }
+
+  .inputGroup {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .searchBar {
+    max-width: 100%;
+  }
+
+  .playlistGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .playlistCard {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .createSection {
+    padding: 1.25rem 0.875rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .sectionDescription {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .label {
+    font-size: 0.75rem;
+  }
+
+  .input,
+  .select,
+  .searchInput {
+    padding: 0.875rem 1rem;
+    font-size: 0.9375rem;
+  }
+
   .createButton {
-    padding: 1rem 1.5rem;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  .playlistCard {
+    padding: 1.25rem;
+  }
+
+  .playlistName {
+    font-size: 1rem;
+  }
+
+  .playlistMeta,
+  .trackCount {
+    font-size: 0.8125rem;
+  }
+
+  .openButton {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
   }
 }

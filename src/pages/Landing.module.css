@@ -54,7 +54,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 2rem 1rem;
   position: relative;
 }
 
@@ -448,16 +448,29 @@
     display: none;
   }
 
+  .heroSection {
+    padding: 1.5rem 1rem;
+  }
+
   .logo {
-    font-size: 3.5rem;
+    font-size: 3rem;
+    word-break: break-word;
   }
 
   .tagline {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
 
   .description {
-    font-size: 1rem;
+    font-size: 0.9375rem;
+    margin: 1.5rem auto 2rem;
+  }
+
+  .signInButton {
+    padding: 0.875rem 2rem;
+    font-size: 0.9375rem;
+    width: 100%;
+    max-width: 300px;
   }
 
   .features {
@@ -498,13 +511,26 @@
 }
 
 @media (max-width: 480px) {
+  .heroSection {
+    padding: 1rem 0.75rem;
+  }
+
   .logo {
-    font-size: 2.75rem;
+    font-size: 2.25rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .description {
+    font-size: 0.875rem;
   }
 
   .signInButton {
-    padding: 0.875rem 2rem;
-    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+    width: 100%;
   }
 
   .stepNumber {
@@ -514,5 +540,17 @@
   .stepIcon {
     width: 48px;
     height: 48px;
+  }
+
+  .step {
+    padding: 1.5rem 1rem;
+  }
+
+  .stepTitle {
+    font-size: 1.25rem;
+  }
+
+  .stepDescription {
+    font-size: 0.9375rem;
   }
 }
