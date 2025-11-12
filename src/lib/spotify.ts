@@ -1,26 +1,15 @@
-const SPOTIFY_AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 
-const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-const redirectUri = import.meta.env.VITE_REDIRECT_URI;
+export const getSpotifyAuthUrl = async () => {
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const response = await fetch(`${supabaseUrl}/functions/v1/spotify-auth?action=login`);
 
-const scopes = [
-  'user-read-private',
-  'user-read-email',
-  'playlist-modify-public',
-  'playlist-modify-private',
-];
+  if (!response.ok) {
+    throw new Error('Failed to get Spotify auth URL');
+  }
 
-export const getSpotifyAuthUrl = () => {
-  const params = new URLSearchParams({
-    client_id: clientId,
-    response_type: 'token',
-    redirect_uri: redirectUri,
-    scope: scopes.join(' '),
-    show_dialog: 'true',
-  });
-
-  return `${SPOTIFY_AUTH_ENDPOINT}?${params.toString()}`;
+  const data = await response.json();
+  return data.url;
 };
 
 export const parseSpotifyCallback = (hash: string) => {

@@ -120,8 +120,13 @@ export const Landing = () => {
     };
   }, [mousePosition]);
 
-  const handleSignIn = () => {
-    window.location.href = getSpotifyAuthUrl();
+  const handleSignIn = async () => {
+    try {
+      const authUrl = await getSpotifyAuthUrl();
+      window.location.href = authUrl;
+    } catch (error) {
+      console.error('Failed to initiate Spotify login:', error);
+    }
   };
 
   const handleScrollDown = () => {
