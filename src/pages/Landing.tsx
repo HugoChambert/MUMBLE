@@ -2,11 +2,38 @@ import { useState, useEffect, useRef } from 'react';
 import { getSpotifyAuthUrl } from '../lib/spotify';
 import styles from './Landing.module.css';
 
+interface Noodle {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  rotation: number;
+  width: number;
+  height: number;
+}
+
 export const Landing = () => {
   const [isHowItWorksVisible, setIsHowItWorksVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [noodles, setNoodles] = useState<Noodle[]>([]);
   const howItWorksRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const animationFrameRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    const initialNoodles: Noodle[] = Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      rotation: Math.random() * 360,
+      width: 80 + Math.random() * 120,
+      height: 30 + Math.random() * 40,
+    }));
+    setNoodles(initialNoodles);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,14 +56,59 @@ export const Landing = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = -(e.clientY / window.innerHeight) * 2 + 1;
-      setMousePosition({ x, y });
+      setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  useEffect(() => {
+    const animate = () => {
+      setNoodles((prevNoodles) =>
+        prevNoodles.map((noodle) => {
+          let { x, y, vx, vy, rotation } = noodle;
+
+          const dx = mousePosition.x - x;
+          const dy = mousePosition.y - y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const bumpRadius = 150;
+
+          if (distance < bumpRadius && distance > 0) {
+            const force = (bumpRadius - distance) / bumpRadius;
+            const angle = Math.atan2(dy, dx);
+            vx -= Math.cos(angle) * force * 0.8;
+            vy -= Math.sin(angle) * force * 0.8;
+          }
+
+          vx *= 0.95;
+          vy *= 0.95;
+
+          x += vx;
+          y += vy;
+
+          if (x < -noodle.width) x = window.innerWidth + noodle.width;
+          if (x > window.innerWidth + noodle.width) x = -noodle.width;
+          if (y < -noodle.height) y = window.innerHeight + noodle.height;
+          if (y > window.innerHeight + noodle.height) y = -noodle.height;
+
+          rotation += vx * 0.1;
+
+          return { ...noodle, x, y, vx, vy, rotation };
+        })
+      );
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [mousePosition]);
 
   const handleSignIn = () => {
     window.location.href = getSpotifyAuthUrl();
@@ -49,30 +121,19 @@ export const Landing = () => {
   return (
     <div className={styles.container} ref={containerRef}>
       <div className={styles.noodleBackground}>
-        <div
-          className={styles.noodle1}
-          style={{
-            transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px) rotateX(${mousePosition.y * 15}deg) rotateY(${mousePosition.x * 15}deg)`,
-          }}
-        />
-        <div
-          className={styles.noodle2}
-          style={{
-            transform: `translate(${mousePosition.x * -25}px, ${mousePosition.y * -25}px) rotateX(${mousePosition.y * -12}deg) rotateY(${mousePosition.x * -12}deg)`,
-          }}
-        />
-        <div
-          className={styles.noodle3}
-          style={{
-            transform: `translate(${mousePosition.x * 20}px, ${mousePosition.y * -20}px) rotateX(${mousePosition.y * 10}deg) rotateY(${mousePosition.x * 10}deg)`,
-          }}
-        />
-        <div
-          className={styles.noodle4}
-          style={{
-            transform: `translate(${mousePosition.x * -15}px, ${mousePosition.y * 25}px) rotateX(${mousePosition.y * -8}deg) rotateY(${mousePosition.x * 8}deg)`,
-          }}
-        />
+        {noodles.map((noodle) => (
+          <div
+            key={noodle.id}
+            className={styles.noodle}
+            style={{
+              left: `${noodle.x}px`,
+              top: `${noodle.y}px`,
+              width: `${noodle.width}px`,
+              height: `${noodle.height}px`,
+              transform: `translate(-50%, -50%) rotate(${noodle.rotation}deg)`,
+            }}
+          />
+        ))}
       </div>
 
       <div className={styles.heroSection}>

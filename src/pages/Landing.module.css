@@ -17,97 +17,22 @@
   transform-style: preserve-3d;
 }
 
-.noodle1, .noodle2, .noodle3, .noodle4 {
+.noodle {
   position: absolute;
-  border-radius: 100px;
-  backdrop-filter: blur(40px);
+  border-radius: 60px;
+  backdrop-filter: blur(30px);
   background: linear-gradient(
     135deg,
-    rgba(29, 185, 84, 0.1),
-    rgba(255, 255, 255, 0.05)
+    rgba(29, 185, 84, 0.12),
+    rgba(255, 255, 255, 0.06)
   );
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 0 80px rgba(29, 185, 84, 0.1);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-style: preserve-3d;
-}
-
-.noodle1 {
-  width: 600px;
-  height: 200px;
-  top: 10%;
-  left: -10%;
-  transform: rotate(-25deg);
-  animation: noodleFloat1 8s ease-in-out infinite;
-}
-
-.noodle2 {
-  width: 500px;
-  height: 180px;
-  top: 50%;
-  right: -8%;
-  transform: rotate(15deg);
-  animation: noodleFloat2 10s ease-in-out infinite;
-  animation-delay: 2s;
-}
-
-.noodle3 {
-  width: 450px;
-  height: 160px;
-  bottom: 15%;
-  left: 20%;
-  transform: rotate(-15deg);
-  animation: noodleFloat3 9s ease-in-out infinite;
-  animation-delay: 1s;
-}
-
-.noodle4 {
-  width: 550px;
-  height: 190px;
-  top: 30%;
-  right: 25%;
-  transform: rotate(20deg);
-  animation: noodleFloat4 11s ease-in-out infinite;
-  animation-delay: 3s;
-}
-
-@keyframes noodleFloat1 {
-  0%, 100% {
-    transform: rotate(-25deg) translateY(0) translateZ(0);
-  }
-  50% {
-    transform: rotate(-25deg) translateY(-30px) translateZ(20px);
-  }
-}
-
-@keyframes noodleFloat2 {
-  0%, 100% {
-    transform: rotate(15deg) translateY(0) translateZ(0);
-  }
-  50% {
-    transform: rotate(15deg) translateY(40px) translateZ(-20px);
-  }
-}
-
-@keyframes noodleFloat3 {
-  0%, 100% {
-    transform: rotate(-15deg) translateY(0) translateZ(0);
-  }
-  50% {
-    transform: rotate(-15deg) translateY(-35px) translateZ(15px);
-  }
-}
-
-@keyframes noodleFloat4 {
-  0%, 100% {
-    transform: rotate(20deg) translateY(0) translateZ(0);
-  }
-  50% {
-    transform: rotate(20deg) translateY(45px) translateZ(-15px);
-  }
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 60px rgba(29, 185, 84, 0.15);
+  pointer-events: none;
+  will-change: transform;
 }
 
 .heroSection {
