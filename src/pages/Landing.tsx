@@ -22,10 +22,11 @@ export const Landing = () => {
   const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
+    const viewportHeight = window.innerHeight;
     const initialNoodles: Noodle[] = Array.from({ length: 20 }, (_, i) => ({
       id: i,
       x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
+      y: Math.random() * viewportHeight,
       vx: (Math.random() - 0.5) * 0.5,
       vy: (Math.random() - 0.5) * 0.5,
       rotation: Math.random() * 360,
@@ -56,8 +57,7 @@ export const Landing = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      setMousePosition({ x: e.clientX, y: e.clientY + scrollY });
+      setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -97,16 +97,10 @@ export const Landing = () => {
           x += vx * deltaTime;
           y += vy * deltaTime;
 
-          const scrollY = window.scrollY || window.pageYOffset;
-          const pageHeight = Math.max(
-            document.documentElement.scrollHeight,
-            document.body.scrollHeight
-          );
-
           if (x < -noodle.width) x = window.innerWidth + noodle.width;
           if (x > window.innerWidth + noodle.width) x = -noodle.width;
-          if (y < -noodle.height - scrollY) y = pageHeight + noodle.height;
-          if (y > pageHeight + noodle.height) y = -noodle.height - scrollY;
+          if (y < -noodle.height) y = window.innerHeight + noodle.height;
+          if (y > window.innerHeight + noodle.height) y = -noodle.height;
 
           rotation += vx * 0.15 * deltaTime;
 
