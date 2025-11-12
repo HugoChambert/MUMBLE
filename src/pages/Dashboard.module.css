@@ -249,9 +249,21 @@
 }
 
 .playlistIcon {
-  font-size: 3rem;
-  text-align: center;
-  filter: grayscale(0.2);
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  color: var(--spotify-green);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.playlistIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.playlistCard:hover .playlistIcon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 12px rgba(29, 185, 84, 0.4));
 }
 
 .playlistName {

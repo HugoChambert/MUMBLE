@@ -1,16 +1,38 @@
+import { useState } from 'react';
 import { getSpotifyAuthUrl } from '../lib/spotify';
 import styles from './Landing.module.css';
 
 export const Landing = () => {
+  const [hoveredLetter, setHoveredLetter] = useState<number | null>(null);
+
   const handleSignIn = () => {
     window.location.href = getSpotifyAuthUrl();
   };
 
+  const logoLetters = 'MUMBLE'.split('');
+
   return (
     <div className={styles.container}>
+      <div className={styles.floatingOrbs}>
+        <div className={styles.orb1}></div>
+        <div className={styles.orb2}></div>
+        <div className={styles.orb3}></div>
+      </div>
+
       <div className={styles.content}>
         <div className={styles.logoContainer}>
-          <h1 className={styles.logo}>MUMBLE</h1>
+          <h1 className={styles.logo}>
+            {logoLetters.map((letter, index) => (
+              <span
+                key={index}
+                className={`${styles.logoLetter} ${hoveredLetter === index ? styles.logoLetterGlow : ''}`}
+                onMouseEnter={() => setHoveredLetter(index)}
+                onMouseLeave={() => setHoveredLetter(null)}
+              >
+                {letter}
+              </span>
+            ))}
+          </h1>
           <div className={styles.tagline}>Discover music from around the world</div>
         </div>
 
@@ -28,19 +50,80 @@ export const Landing = () => {
 
         <div className={styles.features}>
           <div className={styles.feature}>
-            <div className={styles.featureIcon}>🌍</div>
+            <div className={styles.featureIcon}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
             <div className={styles.featureText}>Explore global music scenes</div>
           </div>
           <div className={styles.feature}>
-            <div className={styles.featureIcon}>🎵</div>
+            <div className={styles.featureIcon}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M9 18V5l12-2v13M9 18c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm12-2c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/>
+              </svg>
+            </div>
             <div className={styles.featureText}>Discover new genres</div>
           </div>
           <div className={styles.feature}>
-            <div className={styles.featureIcon}>🎧</div>
+            <div className={styles.featureIcon}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M9 10h6M9 14h6"/>
+              </svg>
+            </div>
             <div className={styles.featureText}>Curated playlists</div>
           </div>
         </div>
       </div>
+
+      <section className={styles.howItWorks}>
+        <h2 className={styles.sectionTitle}>How It Works</h2>
+        <div className={styles.steps}>
+          <div className={styles.step}>
+            <div className={styles.stepNumber}>01</div>
+            <div className={styles.stepIcon}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </div>
+            <h3 className={styles.stepTitle}>Connect</h3>
+            <p className={styles.stepDescription}>
+              Sign in with your Spotify account to get started. Your credentials remain secure.
+            </p>
+          </div>
+
+          <div className={styles.step}>
+            <div className={styles.stepNumber}>02</div>
+            <div className={styles.stepIcon}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
+              </svg>
+            </div>
+            <h3 className={styles.stepTitle}>Choose</h3>
+            <p className={styles.stepDescription}>
+              Enter any country and genre combination. From Brazilian Jazz to Korean Hip-Hop.
+            </p>
+          </div>
+
+          <div className={styles.step}>
+            <div className={styles.stepNumber}>03</div>
+            <div className={styles.stepIcon}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <path d="M22 4L12 14.01l-3-3"/>
+              </svg>
+            </div>
+            <h3 className={styles.stepTitle}>Discover</h3>
+            <p className={styles.stepDescription}>
+              We curate a playlist instantly and add it to your Spotify library. Start listening.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

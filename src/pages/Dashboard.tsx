@@ -180,10 +180,14 @@ export const Dashboard = () => {
               <p>No playlists yet. Create your first one above!</p>
             </div>
           ) : (
-            <div className={styles.playlistGrid}>
+<div className={styles.playlistGrid}>
               {playlists.map((playlist) => (
                 <div key={playlist.id} className={styles.playlistCard}>
-                  <div className={styles.playlistIcon}>🎵</div>
+                  <div className={styles.playlistIcon}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M9 18V5l12-2v13M9 18c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm12-2c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/>
+                    </svg>
+                  </div>
                   <h3 className={styles.playlistName}>{playlist.playlist_name}</h3>
                   <div className={styles.playlistDetails}>
                     <span className={styles.playlistMeta}>
