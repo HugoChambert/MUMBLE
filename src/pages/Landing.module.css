@@ -95,94 +95,46 @@
   margin-bottom: 1.5rem;
 }
 
-.logoWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.lighthouseLogo {
-  width: 120px;
-  height: 120px;
-  animation: fadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.lighthouseBeacon {
-  animation: beaconPulse 2s ease-in-out infinite;
-}
-
-.lighthouseBeams {
-  animation: beamRotate 4s linear infinite;
-  transform-origin: 60px 37px;
-}
-
-@keyframes beaconPulse {
-  0%, 100% {
-    opacity: 1;
-    filter: drop-shadow(0 0 8px var(--spotify-green));
-  }
-  50% {
-    opacity: 0.6;
-    filter: drop-shadow(0 0 16px var(--spotify-green));
-  }
-}
-
-@keyframes beamRotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.lighthouseTower {
-  filter: drop-shadow(0 0 4px rgba(29, 185, 84, 0.3));
-}
-
 .logo {
   font-size: 5.5rem;
   font-weight: 700;
   letter-spacing: 0.1em;
-  margin: 0;
+  margin: 0 0 1rem 0;
   color: var(--text-primary);
   line-height: 1.05;
-  display: flex;
-  justify-content: center;
-  gap: 0.15em;
-}
-
-.logoLetter {
-  display: inline-block;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
   cursor: default;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
-.logoLetter::before {
-  content: attr(data-letter);
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: var(--spotify-green);
-  filter: blur(20px);
-  opacity: 0;
-  transition: opacity 0.4s ease;
+.logoGradient {
+  background: linear-gradient(
+    135deg,
+    var(--spotify-green) 0%,
+    #1ed760 25%,
+    #1fdf64 50%,
+    #1ed760 75%,
+    var(--spotify-green) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+  text-shadow: none;
+  filter: drop-shadow(0 0 30px rgba(29, 185, 84, 0.6))
+          drop-shadow(0 0 60px rgba(29, 185, 84, 0.4));
+  transform: scale(1.05);
 }
 
-.logoLetterGlow {
-  color: var(--spotify-green);
-  text-shadow:
-    0 0 20px rgba(29, 185, 84, 0.8),
-    0 0 40px rgba(29, 185, 84, 0.6),
-    0 0 60px rgba(29, 185, 84, 0.4);
-  transform: scale(1.15);
-}
-
-.logoLetterGlow::before {
-  opacity: 1;
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .tagline {
@@ -513,11 +465,6 @@
 }
 
 @media (max-width: 1024px) {
-  .lighthouseLogo {
-    width: 100px;
-    height: 100px;
-  }
-
   .logo {
     font-size: 4.5rem;
   }
@@ -540,14 +487,8 @@
 }
 
 @media (max-width: 768px) {
-  .lighthouseLogo {
-    width: 80px;
-    height: 80px;
-  }
-
   .logo {
     font-size: 3.5rem;
-    gap: 0.1em;
   }
 
   .tagline {
@@ -596,11 +537,6 @@
 }
 
 @media (max-width: 480px) {
-  .lighthouseLogo {
-    width: 70px;
-    height: 70px;
-  }
-
   .logo {
     font-size: 2.75rem;
   }

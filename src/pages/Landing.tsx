@@ -3,7 +3,7 @@ import { getSpotifyAuthUrl } from '../lib/spotify';
 import styles from './Landing.module.css';
 
 export const Landing = () => {
-  const [hoveredLetter, setHoveredLetter] = useState<number | null>(null);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [isHowItWorksVisible, setIsHowItWorksVisible] = useState(false);
   const howItWorksRef = useRef<HTMLElement>(null);
 
@@ -34,8 +34,6 @@ export const Landing = () => {
     howItWorksRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const logoLetters = 'MUMBLE'.split('');
-
   return (
     <div className={styles.container}>
       <div className={styles.floatingOrbs}>
@@ -47,50 +45,13 @@ export const Landing = () => {
       <div className={styles.heroSection}>
         <div className={styles.content}>
           <div className={styles.logoContainer}>
-            <div className={styles.logoWrapper}>
-              <svg className={styles.lighthouseLogo} viewBox="0 0 120 120" fill="none">
-                <g className={styles.lighthouse}>
-                  <path
-                    d="M50 90L50 45L55 40L60 35L65 40L70 45L70 90Z"
-                    stroke="var(--spotify-green)"
-                    strokeWidth="2"
-                    fill="none"
-                    className={styles.lighthouseTower}
-                  />
-                  <rect x="45" y="88" width="30" height="8" fill="var(--spotify-green)" opacity="0.6"/>
-                  <path
-                    d="M55 40L60 35L65 40L65 45L55 45Z"
-                    fill="var(--spotify-green)"
-                  />
-                  <circle cx="60" cy="37" r="3" fill="var(--spotify-green)" className={styles.lighthouseBeacon}/>
-                  <path
-                    d="M60 37 L35 20 M60 37 L85 20"
-                    stroke="var(--spotify-green)"
-                    strokeWidth="1.5"
-                    opacity="0.4"
-                    className={styles.lighthouseBeams}
-                  />
-                  <path
-                    d="M40 95 Q60 92 80 95"
-                    stroke="var(--spotify-green)"
-                    strokeWidth="1"
-                    opacity="0.3"
-                  />
-                </g>
-              </svg>
-              <h1 className={styles.logo}>
-                {logoLetters.map((letter, index) => (
-                  <span
-                    key={index}
-                    className={`${styles.logoLetter} ${hoveredLetter === index ? styles.logoLetterGlow : ''}`}
-                    onMouseEnter={() => setHoveredLetter(index)}
-                    onMouseLeave={() => setHoveredLetter(null)}
-                  >
-                    {letter}
-                  </span>
-                ))}
-              </h1>
-            </div>
+            <h1
+              className={`${styles.logo} ${isLogoHovered ? styles.logoGradient : ''}`}
+              onMouseEnter={() => setIsLogoHovered(true)}
+              onMouseLeave={() => setIsLogoHovered(false)}
+            >
+              MUMBLE
+            </h1>
             <div className={styles.tagline}>Discover music from around the world</div>
           </div>
 
