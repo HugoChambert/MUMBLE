@@ -19,16 +19,15 @@ Deno.serve(async (req: Request) => {
   try {
     const url = new URL(req.url);
     const action = url.searchParams.get('action');
+    const clientId = url.searchParams.get('clientId');
+    const redirectUri = url.searchParams.get('redirectUri');
 
     if (action === 'login') {
-      const clientId = Deno.env.get('SPOTIFY_CLIENT_ID');
-      const redirectUri = Deno.env.get('SPOTIFY_REDIRECT_URI');
-
       if (!clientId || !redirectUri) {
         return new Response(
-          JSON.stringify({ error: 'Spotify credentials not configured' }),
+          JSON.stringify({ error: 'Missing clientId or redirectUri parameters' }),
           {
-            status: 500,
+            status: 400,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
         );

@@ -2,10 +2,20 @@ const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 
 export const getSpotifyAuthUrl = async () => {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  const response = await fetch(`${supabaseUrl}/functions/v1/spotify-auth?action=login`);
+  const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+  const redirectUri = import.meta.env.VITE_REDIRECT_URI;
+
+  const params = new URLSearchParams({
+    action: 'login',
+    clientId: clientId,
+    redirectUri: redirectUri,
+  });
+
+  const response = await fetch(`${supabaseUrl}/functions/v1/spotify-auth?${params.toString()}`);
 
   if (!response.ok) {
-    throw new Error('Failed to get Spotify auth URL');
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to get Spotify auth URL');
   }
 
   const data = await response.json();
