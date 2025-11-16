@@ -171,35 +171,6 @@ export const Landing = () => {
             </svg>
             Sign in with Spotify
           </button>
-
-          <div className={styles.features}>
-            <div className={styles.feature}>
-              <div className={styles.featureIcon}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                </svg>
-              </div>
-              <div className={styles.featureText}>Explore global music scenes</div>
-            </div>
-            <div className={styles.feature}>
-              <div className={styles.featureIcon}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M9 18V5l12-2v13M9 18c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm12-2c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/>
-                </svg>
-              </div>
-              <div className={styles.featureText}>Discover new genres</div>
-            </div>
-            <div className={styles.feature}>
-              <div className={styles.featureIcon}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <rect x="3" y="3" width="18" height="18" rx="2"/>
-                  <path d="M9 10h6M9 14h6"/>
-                </svg>
-              </div>
-              <div className={styles.featureText}>Curated playlists</div>
-            </div>
-          </div>
         </div>
 
         <button
@@ -211,6 +182,35 @@ export const Landing = () => {
             <path d="M12 5v14M19 12l-7 7-7-7"/>
           </svg>
         </button>
+      </div>
+
+      <div className={styles.features}>
+        <div className={styles.feature}>
+          <div className={styles.featureIcon}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div className={styles.featureText}>Explore global music scenes</div>
+        </div>
+        <div className={styles.feature}>
+          <div className={styles.featureIcon}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M9 18V5l12-2v13M9 18c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3zm12-2c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/>
+            </svg>
+          </div>
+          <div className={styles.featureText}>Discover new genres</div>
+        </div>
+        <div className={styles.feature}>
+          <div className={styles.featureIcon}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M9 10h6M9 14h6"/>
+            </svg>
+          </div>
+          <div className={styles.featureText}>Curated playlists</div>
+        </div>
       </div>
 
       <section
