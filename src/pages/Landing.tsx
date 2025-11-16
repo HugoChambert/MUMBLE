@@ -18,6 +18,7 @@ export const Landing = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [noodles, setNoodles] = useState<Noodle[]>([]);
   const howItWorksRef = useRef<HTMLElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
 
@@ -130,7 +131,7 @@ export const Landing = () => {
   };
 
   const handleScrollDown = () => {
-    howItWorksRef.current?.scrollIntoView({ behavior: 'smooth' });
+    featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -184,7 +185,7 @@ export const Landing = () => {
         </button>
       </div>
 
-      <div className={styles.features}>
+      <div ref={featuresRef} className={styles.features}>
         <div className={styles.feature}>
           <div className={styles.featureIcon}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
