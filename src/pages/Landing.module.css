@@ -478,7 +478,7 @@
   .features {
     grid-template-columns: 1fr;
     gap: 1rem;
-    margin-top: 4rem;
+    padding: 3rem 1rem;
   }
 
   .feature {
