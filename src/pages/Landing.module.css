@@ -301,6 +301,22 @@
   position: relative;
 }
 
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 80px;
+  left: 16.66%;
+  right: 16.66%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(29, 185, 84, 0.3) 10%,
+    rgba(29, 185, 84, 0.3) 90%,
+    transparent
+  );
+  z-index: 0;
+}
 
 .step {
   position: relative;
