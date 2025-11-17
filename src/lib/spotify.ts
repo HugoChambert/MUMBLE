@@ -2,6 +2,7 @@ const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 
 export const getSpotifyAuthUrl = async () => {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
   const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
   const redirectUri = import.meta.env.VITE_REDIRECT_URI;
 
@@ -11,7 +12,11 @@ export const getSpotifyAuthUrl = async () => {
     redirectUri: redirectUri,
   });
 
-  const response = await fetch(`${supabaseUrl}/functions/v1/spotify-auth?${params.toString()}`);
+  const response = await fetch(`${supabaseUrl}/functions/v1/spotify-auth?${params.toString()}`, {
+    headers: {
+      'Authorization': `Bearer ${anonKey}`,
+    },
+  });
 
   if (!response.ok) {
     const errorData = await response.json();
