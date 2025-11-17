@@ -124,9 +124,11 @@ export const Landing = () => {
   const handleSignIn = async () => {
     try {
       const authUrl = await getSpotifyAuthUrl();
+      console.log('Auth URL:', authUrl);
       window.location.href = authUrl;
     } catch (error) {
       console.error('Failed to initiate Spotify login:', error);
+      alert('Failed to initiate Spotify login. Check console for details.');
     }
   };
 
