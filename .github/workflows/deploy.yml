@@ -16,18 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-          
       - run: npm ci
-        
       - run: npm run build
-        
       - uses: actions/configure-pages@v4
-        
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -39,16 +34,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
         id: deployment
-```
-
-7. Commit the file
-
----
-
-## **Pro Tip:**
-
-Copy this exact text and paste it into the filename box:
-```
-.github/workflows/deploy.yml
+        uses: actions/deploy-pages@v4
