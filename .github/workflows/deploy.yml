@@ -51,19 +51,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-```
-
-### Step 5: Commit the File
-1. Scroll down to the bottom
-2. In the "Commit new file" section:
-   - Add a message like: `Add GitHub Actions deployment workflow`
-3. Click the green **"Commit new file"** button
-
-### That's It! ✅
-
-The file is now added. You should see it in your repository at:
-```
-MUMBLE
-└── .github
-    └── workflows
-        └── deploy.yml
